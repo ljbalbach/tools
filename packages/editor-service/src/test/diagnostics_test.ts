@@ -96,12 +96,12 @@ suite('DiagnosticGenerator', function() {
     assert.containSubset(diagnostics, <Diagnostic[]>[{
                            code: 'parse-error',
                            severity: DiagnosticSeverity.Error,
-                           message: `Unexpected token (1:4)`,
+                           message: `Unexpected keyword 'var'. (1:4)`,
                          }]);
     assert.deepEqual(
         await underliner.underlineDiagnostics(diagnostics, indexPath), [`
 <script>var var var var var let const;</script>
-            ~`]);
+           ~`]);
     await client.cleanup();
   });
 

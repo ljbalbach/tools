@@ -77,6 +77,6 @@ suite('DomModuleScanner', () => {
         ]);
     assert.deepEqual(await underliner.underline(domModules[0].warnings), [`
               <other-elem prop="{{foo bar}}"></other-elem>
-                                      ~`]);
+                                    ~`]);
   });
 });

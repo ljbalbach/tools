@@ -311,13 +311,13 @@ suite('ExpressionScanner', () => {
           [
             `
           <div id="{{foo(}}"></div>
-                         ~`,
+                        ~`,
             `
             foo bar
-                ~`,
+              ~`,
             `
           {{]}}
-            ~`,
+           ~`,
             `
           <div id="{{-foo}}"></div>
                      ~~~~`,
@@ -372,7 +372,7 @@ suite('ExpressionScanner', () => {
       assert.deepEqual(await underliner.underline(warnings), [
         `
           'foo(bar baz)',
-                   ~`,
+                  ~`,
         `
           10,
           ~~`,

@@ -516,10 +516,10 @@ namespaced name.`,
               warningUnderlines: [
                 `
         computed: 'let let let',
-                       ~`,
+                      ~`,
                 `
         observer: 'let let let',
-                       ~`,
+                      ~`,
               ]
             },
             {
@@ -544,7 +544,7 @@ namespaced name.`,
           warningUnderlines: [
             `
       'let let let parseError',
-           ~`,
+          ~`,
             `
       'foo',
        ~~~`
