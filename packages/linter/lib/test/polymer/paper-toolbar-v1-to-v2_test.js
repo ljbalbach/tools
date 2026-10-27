@@ -1,0 +1,61 @@
+"use strict";
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const path = require("path");
+const polymer_project_config_1 = require("polymer-project-config");
+const linter_1 = require("../../linter");
+const registry_1 = require("../../registry");
+const util_1 = require("../util");
+const fixtures_dir = path.join(__dirname, '..', '..', '..', 'test');
+const ruleId = 'paper-toolbar-v1-to-v2';
+suite(ruleId, () => {
+    let analyzer;
+    let linter;
+    setup(() => __awaiter(this, void 0, void 0, function* () {
+        ({ analyzer } =
+            yield polymer_project_config_1.ProjectConfig.initializeAnalyzerFromDirectory(fixtures_dir));
+        linter = new linter_1.Linter(registry_1.registry.getRules([ruleId]), analyzer);
+    }));
+    let testName = 'adds `slot="top"` to child elements without slots or special classes';
+    test(testName, () => __awaiter(this, void 0, void 0, function* () {
+        yield util_1.assertExpectedFixes(linter, analyzer, `${ruleId}/child-default-slot_before.html`, `${ruleId}/child-default-slot_after.html`);
+    }));
+    testName = 'adds `slot="middle"` to child elements with `class="middle"`';
+    test(testName, () => __awaiter(this, void 0, void 0, function* () {
+        yield util_1.assertExpectedFixes(linter, analyzer, `${ruleId}/child-middle-slot_before.html`, `${ruleId}/child-middle-slot_after.html`);
+    }));
+    testName = 'adds `slot="bottom"` to child elements with `class="bottom"`';
+    test(testName, () => __awaiter(this, void 0, void 0, function* () {
+        yield util_1.assertExpectedFixes(linter, analyzer, `${ruleId}/child-bottom-slot_before.html`, `${ruleId}/child-bottom-slot_after.html`);
+    }));
+    testName =
+        'wraps non-whitespace child text nodes with `<span slot="top">`...' +
+            '`</span>`';
+    test(testName, () => __awaiter(this, void 0, void 0, function* () {
+        yield util_1.assertExpectedFixes(linter, analyzer, `${ruleId}/child-non-whitespace-text_before.html`, `${ruleId}/child-non-whitespace-text_after.html`);
+    }));
+    test('many children requiring different fixes are all fixed', () => __awaiter(this, void 0, void 0, function* () {
+        yield util_1.assertExpectedFixes(linter, analyzer, `${ruleId}/children-mixed_before.html`, `${ruleId}/children-mixed_after.html`);
+    }));
+});
+//# sourceMappingURL=paper-toolbar-v1-to-v2_test.js.map
