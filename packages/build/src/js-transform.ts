@@ -13,7 +13,7 @@
  */
 
 import * as babelCore from '@babel/core';
-import * as babylon from 'babylon';
+import * as babylon from '@babel/parser';
 import {JsCompileTarget, ModuleResolutionStrategy} from 'polymer-project-config';
 import * as uuid from 'uuid/v1';
 

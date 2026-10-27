@@ -13,8 +13,8 @@
  */
 
 import * as babel from '@babel/types';
-import * as babylon from 'babylon';
-import {parse} from 'babylon';
+import * as babylon from '@babel/parser';
+import {parse} from '@babel/parser';
 import {assert} from 'chai';
 
 import {getEventComments, getPropertyName, getSimpleObjectProperties} from '../../javascript/esutil';

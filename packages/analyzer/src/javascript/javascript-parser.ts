@@ -13,7 +13,7 @@
  */
 
 import * as babel from '@babel/types';
-import * as babylon from 'babylon';
+import * as babylon from '@babel/parser';
 
 import {correctSourceRange, InlineDocInfo, LocationOffset, Severity, SourceRange, Warning, WarningCarryingException} from '../model/model';
 import {ResolvedUrl} from '../model/url';
@@ -27,11 +27,13 @@ export type SourceType = 'script'|'module';
 
 declare class SyntaxError {
   message: string;
-  lineNumber: number;
-  column: number;
+  loc: {
+    line: number;
+    column: number;
+  };
 }
 
-const baseParseOptions: babylon.BabylonOptions = {
+const baseParseOptions: babylon.ParserOptions = {
   plugins: [
     'asyncGenerators',
     'dynamicImport',
@@ -148,8 +150,8 @@ export function parseJs(
           sourceRange: correctSourceRange(
               {
                 file,
-                start: {line: err.lineNumber - 1, column: err.column - 1},
-                end: {line: err.lineNumber - 1, column: err.column - 1}
+                start: {line: err.loc.line - 1, column: err.loc.column - 1},
+                end: {line: err.loc.line - 1, column: err.loc.column - 1}
               },
               locationOffset)!,
         }
@@ -165,7 +167,7 @@ export function parseJs(
  * message of these errors and updates the error object in place.
  */
 function updateLineNumberAndColumnForError(err: SyntaxError) {
-  if (typeof err.lineNumber === 'number' && typeof err.column === 'number') {
+  if (typeof err.loc.line === 'number' && typeof err.loc.column === 'number') {
     return;
   }
   if (!err.message) {
@@ -176,6 +178,6 @@ function updateLineNumberAndColumnForError(err: SyntaxError) {
   if (!lineAndColumnMatch) {
     return;
   }
-  err.lineNumber = parseInt(lineAndColumnMatch[2], 10);
-  err.column = parseInt(lineAndColumnMatch[3], 10) + 1;
+  err.loc.line = parseInt(lineAndColumnMatch[2], 10);
+  err.loc.column = parseInt(lineAndColumnMatch[3], 10) + 1;
 }
