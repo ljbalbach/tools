@@ -37,6 +37,6 @@
     "@types/trusted-types": "^1.0.4"
   },
   "peerDependencies": {
-    "mocha": "*"
+    "mocha": "^5.2.0"
   }
 }
