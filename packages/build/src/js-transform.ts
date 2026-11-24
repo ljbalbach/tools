@@ -194,7 +194,10 @@ export function jsTransform(js: string, options: JsTransformOptions): string {
   const presets = [];
 
   if (options.externalHelpers) {
-    plugins.push(babelExternalHelpersPlugin);
+    plugins.push([
+      babelExternalHelpersPlugin,
+      { helperVersion: babelCore.version },
+    ]);
   }
   if (options.minify) {
     doBabelTransform = true;

@@ -37,8 +37,7 @@ const baseParseOptions: babylon.ParserOptions = {
   plugins: [
     'asyncGenerators',
     'dynamicImport',
-    // tslint:disable-next-line: no-any Remove this once typings updated.
-    'importMeta' as any,
+    'importMeta',
     'objectRestSpread',
   ],
 };

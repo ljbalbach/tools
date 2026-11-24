@@ -132,6 +132,25 @@ suite('JavaScriptParser', () => {
       assert.equal(document.ast.type, 'File');
       assert.equal(document.parsedAsSourceType, 'module');
     });
+
+    test('parses modern ES syntax (optional chaining, nullish coalescing, private fields)', () => {
+      const contents = `
+        class Example {
+          #secret = 42;
+          getValue(obj) {
+            return obj?.nested ?? this.#secret;
+          }
+        }
+      `;
+      const document = parser.parse(
+        contents,
+        resolvedUrl`/test.js`,
+        new PackageUrlResolver());
+      assert.instanceOf(document, JavaScriptDocument);
+      assert.equal(document.url, '/test.js');
+      assert.equal(document.ast.type, 'File');
+      assert.equal(document.contents, contents);
+    });
   });
 
   suite(`stringify()`, () => {
