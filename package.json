@@ -8,7 +8,7 @@
   "license": "BSD-3-Clause",
   "author": "The Polymer Project Authors",
   "scripts": {
-    "bootstrap": "lerna bootstrap --ci",
+    "bootstrap": "SKIP_WCT_SAUCE_POSTINSTALL_DOWNLOAD=1 lerna bootstrap --ci",
     "build": "lerna run build --stream",
     "format": "lerna run format --stream",
     "lint": "lerna run lint --stream",
